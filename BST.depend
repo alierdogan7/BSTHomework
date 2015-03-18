@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1426694357 source:/home/burak/Documents/CS202/CS202_hw2/BST/BST.cpp
+	<cstdlib>
+	<iostream>
+	<iomanip>
+	"BST.h"
+
+1426694371 source:/home/burak/Documents/CS202/CS202_hw2/BST/main.cpp
+	<iostream>
+	"BST.h"
+
+1426694198 /home/burak/Documents/CS202/CS202_hw2/BST/BST.h
+
