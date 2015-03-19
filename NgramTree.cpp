@@ -1,33 +1,61 @@
+#include <string>
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
 using namespace std;
 
-#include "BST.h"
+#include "NgramTree.h"
 
-BST::BST()
+NgramTree::NgramTree()
 {
     this->root = NULL;
 }
 
-BST::~BST()
+NgramTree::~NgramTree()
 {
 }
 
-BstNode* BST::getRoot()
+int NgramTree::getTotalNgramCount()
+{
+}
+
+void NgramTree::printNgramFrequencies()
+{
+    traverseFrequencies( this->root );
+}
+
+void NgramTree::traverseFrequencies(NgramNode *node)
+{
+    if( node == NULL ) return;
+
+    traverseFrequencies( node->left );
+    cout << "\"" << node->data << "\" appears " << node->count << " time(s)." << endl;
+    traverseFrequencies( node->right );
+}
+
+bool NgramTree::isComplete()
+{
+}
+
+NgramNode* NgramTree::getRoot()
 {
     return this->root;
 }
 
-BstNode* BST::getNewNode(int data)
+void NgramTree::generateTree(string fileName, int n)
 {
-    BstNode* newNode = new BstNode();
+
+}
+
+NgramNode* NgramTree::getNewNode(string data)
+{
+    NgramNode* newNode = new NgramNode();
     newNode->data = data;
     newNode->left = newNode->right = NULL;
     return newNode;
 }
 
-void BST::print(BstNode *current, int indent)
+void NgramTree::print(NgramNode *current, int indent)
 {
     if (current != NULL)
     {
@@ -39,7 +67,7 @@ void BST::print(BstNode *current, int indent)
     }
 }
 
-void BST::insert(int data)
+void NgramTree::addNgram(string data)
 {
     if(this->root == NULL)
     {
@@ -51,13 +79,19 @@ void BST::insert(int data)
     }
 }
 
-BstNode* BST::insertRecursion(BstNode* node, int data)
+
+NgramNode* NgramTree::insertRecursion(NgramNode* node, string data)
 {
     if( node == NULL)
     {
         node = getNewNode(data);
+        node->count++;
     }
-    else if ( data <= node->data ) //if less or equal, insert to left
+    else if (  data.compare(node->data) == 0 )
+    {
+        node->count++; // if strings are equal increment frequency
+    }
+    else if ( data.at(0) <= node->data.at(0) ) //if less or equal, insert to left
     {
         node->left = this->insertRecursion(node->left, data);
     }
@@ -69,18 +103,18 @@ BstNode* BST::insertRecursion(BstNode* node, int data)
     return node;
 }
 
-BstNode* BST::search(int data)
+NgramNode* NgramTree::search(string data)
 {
     return this->searchRecursion( this->root, data);
 }
 
-BstNode* BST::searchRecursion(BstNode* node, int data)
+NgramNode* NgramTree::searchRecursion(NgramNode* node, string data)
 {
     if( node == NULL ) return node;
 
-    if( data == node->data)
+    if( data.at(0) == node->data.at(0) )
         return node;
-    else if( data <= node->data )
+    else if( data.at(0) <= node->data.at(0) )
         return this->searchRecursion( node->left, data);
     else
         return this->searchRecursion( node->right, data);
@@ -88,20 +122,20 @@ BstNode* BST::searchRecursion(BstNode* node, int data)
 
 
 
-void BST::removeIterative(int data)
+void NgramTree::removeIterative(string data)
 {
-    BstNode *node = this->root;
-    BstNode *parent = NULL;
+    NgramNode *node = this->root;
+    NgramNode *parent = NULL;
 
     while( node != NULL ) //if the node is not still found, keep traversing
     {
-        if ( data < node->data )
+        if ( data.at(0) < node->data.at(0) )
         {
             // keep traverse
             parent = node;
             node = node->left;
         }
-        else if ( data > node->data )
+        else if ( data.at(0) > node->data.at(0) )
         {
             // keep traverse
             parent = node;
@@ -171,8 +205,8 @@ void BST::removeIterative(int data)
                 // if it has TWO child
                 // find the min. node and its parent
 
-                BstNode *tmp = node->right;
-                BstNode *tmpParent = node;
+                NgramNode *tmp = node->right;
+                NgramNode *tmpParent = node;
 
                 if ( tmp->left == NULL ) // node->right->left == NULL
                 {
@@ -202,11 +236,11 @@ void BST::removeIterative(int data)
     }
 }
 
-BstNode* BST::removeRecursion(BstNode* node, int data)
+NgramNode* NgramTree::removeRecursion(NgramNode* node, string data)
 {
     if(node == NULL) return NULL;
-    else if ( data < node->data ) node->left = removeRecursion( node->left, data);
-    else if ( data > node->data ) node->right = removeRecursion( node->right, data);
+    else if ( data.at(0) < node->data.at(0) ) node->left = removeRecursion( node->left, data);
+    else if ( data.at(0) > node->data.at(0) ) node->right = removeRecursion( node->right, data);
     else
     {
         if ( node->left == NULL && node->right == NULL )
@@ -218,21 +252,21 @@ BstNode* BST::removeRecursion(BstNode* node, int data)
         else if ( node->left == NULL )
         {
             //if it has ONE child and RIGHT
-            BstNode *tmp = node;
+            NgramNode *tmp = node;
             node = node->right;
             delete tmp;
         }
         else if ( node->right == NULL )
         {
             // if it has ONE child and LEFT
-            BstNode *tmp = node;
+            NgramNode *tmp = node;
             node = node->left;
             delete tmp;
         }
         else
         {
             // if it has TWO child
-            BstNode *tmp = this->findMin(node->right);
+            NgramNode *tmp = this->findMin(node->right);
             node->data = tmp->data;
             node->right = this->removeRecursion(node->right, tmp->data);
         }
@@ -240,7 +274,7 @@ BstNode* BST::removeRecursion(BstNode* node, int data)
     }
 }
 
-BstNode* BST::findMax(BstNode* root)
+NgramNode* NgramTree::findMax(NgramNode* root)
 {
     if( root == NULL ) return NULL;
     if(root->right == NULL) return root;
@@ -248,7 +282,7 @@ BstNode* BST::findMax(BstNode* root)
     findMax(root->right);
 }
 
-BstNode* BST::findMin(BstNode *root)
+NgramNode* NgramTree::findMin(NgramNode *root)
 {
     if( root == NULL ) return NULL;
     if(root->left == NULL) return root;

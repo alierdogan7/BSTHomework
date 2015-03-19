@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 using namespace std;
 
 #include "BST.h"
@@ -28,5 +28,36 @@ int main()
     if( (foundItem = myBst.search(seek) ) != NULL ) cout << "\n\nFound! " <<  foundItem << "->data = " << foundItem->data << endl;
     else cout << "\n\nNot found!" << endl;
 
+    int option;
+
+    do {
+        cout << "Enter the data to insert to BST (exiting is -1): ";
+        cin >> option;
+
+        if(option != -1)
+        {
+            myBst.insert(option);
+            cout << "The root of the BST is: " << (myBst.getRoot())->data << endl;
+            myBst.print(myBst.getRoot(), id);
+        }
+
+
+    } while( option != -1);
+
+    do {
+        cout << "Enter the data to delete from BST (exiting is -1): ";
+        cin >> option;
+
+        if(option != -1)
+        {
+            myBst.removeIterative(option);
+            cout << "The root of the BST is: " << (myBst.getRoot())->data << endl;
+            myBst.print(myBst.getRoot(), id);
+        }
+
+
+    } while( option != -1);
+
     return 0;
 }
+*/

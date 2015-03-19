@@ -20,8 +20,8 @@ public:
     BstNode* search(int data);
     BstNode* searchRecursion(BstNode* node, int data);
 
-    void removeItem(int data);
-    void removeRecursion(BstNode* node, int data);
+    void removeIterative(int data);
+    BstNode* removeRecursion(BstNode* node, int data);
 
     BstNode* findMax(BstNode* root);
     BstNode* findMin(BstNode* root);

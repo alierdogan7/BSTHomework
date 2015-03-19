@@ -31,6 +31,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="BST.cpp" />
+		<Unit filename="BST.h" />
+		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
