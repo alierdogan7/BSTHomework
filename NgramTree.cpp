@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <queue>
 using namespace std;
 
 #include "NgramTree.h"
@@ -48,6 +49,37 @@ void NgramTree::traverseFrequencies(NgramNode *node)
 
 bool NgramTree::isComplete()
 {
+    /*
+        My approach is do BFS using queue and count the no of nodes.
+        Run a loop till the queue is not null but break once you find one of the below condition holds good:
+        left node is not present for a node
+        left node is present but right node is not present.
+
+        Now we can compare the count that we get from the above approach and the original
+        count of the nodes in the tree. If both equal then complete binary tree else not.
+    */
+
+    queue<NgramNode*> q;
+    q.push(this->root);
+
+    int nodeCount = 0;
+    for( NgramNode *tmp = q.front(); tmp != NULL; nodeCount++)
+    {
+        cout << "in node: " << tmp->data << endl;
+
+        if(tmp->left == NULL || (tmp->left != NULL && tmp->right == NULL) )
+            break; //if left node is missing and right node is existing, cannot be complete tree
+
+        q.push(tmp->left);
+        q.push(tmp->right);
+        q.pop();
+
+
+
+        tmp = q.front();
+    }
+
+    return (nodeCount == this->getTotalNgramCount() ) ? true : false;
 }
 
 NgramNode* NgramTree::getRoot()

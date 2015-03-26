@@ -26,5 +26,22 @@ int main()
 
     cout << "\n Total n-gram count: " << ngt.getTotalNgramCount() << endl;
 
+    //cout << "\n Is complete tree? " << ( (ngt.isComplete()) ? "Yes" : "No" ) << endl;
+
+    NgramTree ngt2;
+    ngt2.addNgram("f");
+    ngt2.addNgram("c");
+    ngt2.addNgram("j");
+    ngt2.addNgram("a");
+    ngt2.addNgram("d");
+    ngt2.addNgram("g");
+    ngt2.addNgram("k");
+
+    int id2 = 0;
+    ngt2.print(ngt2.getRoot(), id2);
+
+    cout << "\n Is second tree complete? " << ( (ngt2.isComplete()) ? "Yes" : "No" ) << endl;
+
+
     return 0;
 }
