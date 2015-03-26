@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 using namespace std;
 
 #include "NgramTree.h"
@@ -17,6 +18,18 @@ NgramTree::~NgramTree()
 
 int NgramTree::getTotalNgramCount()
 {
+    int totalNgram = 0;
+    traverseNgramCounts( this->root, totalNgram);
+    return totalNgram;
+}
+
+void NgramTree::traverseNgramCounts(NgramNode *node, int& count)
+{
+    if ( node == NULL ) return;
+
+    traverseNgramCounts( node->left, count);
+    count++;
+    traverseNgramCounts( node->right, count);
 }
 
 void NgramTree::printNgramFrequencies()
@@ -44,7 +57,45 @@ NgramNode* NgramTree::getRoot()
 
 void NgramTree::generateTree(string fileName, int n)
 {
+    //string text = "this is sample text \nand thise is all";
 
+    string text("");
+    string line;
+    ifstream myFile("sample.txt");
+
+    if (myFile.is_open())
+    {
+      while ( getline(myFile, line) )
+      {
+        text.append(line);
+      }
+      myFile.close();
+    }
+    else
+    {
+        cout << "Unable to open file" << endl;
+        return;
+    }
+
+    for(int i = 0; i < text.length(); i++)
+    {
+        string tmp = "";
+        for(int j = 0; j < n; j++)
+        {
+            if(i+j < text.length())  //if the string size is not exceeded
+                tmp += text.at(i+j);
+
+        }
+
+        cout << tmp << endl;
+        std::size_t found;
+        if( (tmp.length() != n) ||
+            ( (found = tmp.find(' ') ) != string::npos) ||
+            ( (found = tmp.find('\n') ) != string::npos) ) //npos is -1, if it contains empty space OR length is not equal to n, just ignore it
+            continue;
+
+        this->addNgram(tmp);
+    }
 }
 
 NgramNode* NgramTree::getNewNode(string data)

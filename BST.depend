@@ -10,17 +10,18 @@
 
 1426714826 /home/burak/Documents/CS202/CS202_hw2/BST/BST.h
 
-1426780360 source:/home/burak/Documents/CS202/CS202_hw2/BST/NgramTree.cpp
+1427354639 source:/home/burak/Documents/CS202/CS202_hw2/BST/NgramTree.cpp
 	<string>
 	<cstdlib>
 	<iostream>
 	<iomanip>
+	<fstream>
 	"NgramTree.h"
 
-1426782139 /home/burak/Documents/CS202/CS202_hw2/BST/NgramTree.h
+1427354653 /home/burak/Documents/CS202/CS202_hw2/BST/NgramTree.h
 	<string.h>
 
-1426782162 source:/home/burak/Documents/CS202/CS202_hw2/BST/prog.cpp
+1427354690 source:/home/burak/Documents/CS202/CS202_hw2/BST/prog.cpp
 	<iostream>
 	"NgramTree.h"
 

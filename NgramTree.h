@@ -18,13 +18,17 @@ class NgramTree
 public:
     NgramTree();
     ~NgramTree();
+
     void addNgram(string ngram);
+
     int getTotalNgramCount();
+    void traverseNgramCounts(NgramNode *node, int& count);
 
     void printNgramFrequencies();
     void traverseFrequencies(NgramNode *node);
 
     bool isComplete();
+
     void generateTree(string fileName, int n);
     static int compareStr(string str1, string str2);
 
